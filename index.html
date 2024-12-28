@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>เกมเป่ายิ้งฉุบ</title>
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(145deg, #ffd700, #daa520);
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .reset-button {
+            margin-top: 1rem;
+            background: linear-gradient(145deg, #ff6b6b, #cc5555);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .reset-button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(145deg, #ff5555, #cc4444);
+        }
+
+        h1 {
+            color: #b8860b;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        button {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #ffd700, #daa520);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            min-width: 300px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-button {
+            margin-top: 1rem;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #666666, #444444);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .close-button:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(145deg, #555555, #333333);
+        }
+
+        .modal-content h2 {
+            font-size: 2rem;
+            color: #b8860b;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content p {
+            font-size: 1.5rem;
+            line-height: 2rem;
+            margin: 0.5rem 0;
+        }
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        #timer {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: #daa520;
+        }
+
+        #score {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: #b8860b;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>เกมเป่ายิ้งฉุบ</h1>
+        <div class="buttons">
+            <button onclick="play('กรรไกร')">✌️ กรรไกร</button>
+            <button onclick="play('ค้อน')">✊ ค้อน</button>
+            <button onclick="play('กระดาษ')">✋ กระดาษ</button>
+        </div>
+        <div id="score">
+            คะแนนของคุณ: <span id="playerScore">0</span>
+            คะแนนคอมพิวเตอร์: <span id="computerScore">0</span>
+        </div>
+        <button class="reset-button" onclick="resetGame()">🔄 เริ่มเกมใหม่</button>
+    </div>
+
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="result"></h2>
+            <p id="choices"></p>
+            <p id="timer"></p>
+            <button class="close-button" onclick="closeModal()">ปิด</button>
+        </div>
+    </div>
+
+    <script>
+        let playerScore = 0;
+        let computerScore = 0;
+        let timerInterval;
+
+        function play(playerChoice) {
+            const choices = ['กรรไกร', 'ค้อน', 'กระดาษ'];
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            
+            let result = '';
+            
+            if (playerChoice === computerChoice) {
+                result = 'เสมอ!';
+            } else if (
+                (playerChoice === 'กรรไกร' && computerChoice === 'กระดาษ') ||
+                (playerChoice === 'ค้อน' && computerChoice === 'กรรไกร') ||
+                (playerChoice === 'กระดาษ' && computerChoice === 'ค้อน')
+            ) {
+                result = 'คุณชนะ! 🎉';
+                playerScore++;
+            } else {
+                result = 'คอมพิวเตอร์ชนะ! 😢';
+                computerScore++;
+            }
+
+            document.getElementById('playerScore').textContent = playerScore;
+            document.getElementById('computerScore').textContent = computerScore;
+            
+            showResult(result, `คุณเลือก: ${playerChoice} | คอมพิวเตอร์เลือก: ${computerChoice}`);
+        }
+
+        function showResult(result, choices) {
+            const modal = document.getElementById('resultModal');
+            document.getElementById('result').textContent = result;
+            document.getElementById('choices').textContent = choices;
+            modal.style.display = 'block';
+            startTimer();
+        }
+
+        function startTimer() {
+            let timeLeft = 5;
+            const timerElement = document.getElementById('timer');
+            
+            clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = `ปิดอัตโนมัติใน ${timeLeft} วินาที`;
+                
+                if (timeLeft <= 0) {
+                    closeModal();
+                }
+            }, 1000);
+        }
+
+        function closeModal() {
+            document.getElementById('resultModal').style.display = 'none';
+            clearInterval(timerInterval);
+        }
+
+        function resetGame() {
+            playerScore = 0;
+            computerScore = 0;
+            document.getElementById('playerScore').textContent = '0';
+            document.getElementById('computerScore').textContent = '0';
+            showResult('เริ่มเกมใหม่! 🎮', 'คะแนนถูกรีเซ็ตแล้ว');
+        }
+
+        // ปิด Modal เมื่อคลิกนอกกรอบ
+        window.onclick = function(event) {
+            const modal = document.getElementById('resultModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
