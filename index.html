@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>เกมเป่ายิ้งฉุบ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body {
             font-family: 'Kanit', sans-serif;
@@ -25,17 +27,18 @@
         .reset-button {
             margin-top: 1rem;
             background: linear-gradient(145deg, #ff6b6b, #cc5555);
-            padding: 0.8rem 1.5rem;
+            padding: 0.5rem 1rem;
             border: none;
             border-radius: 8px;
             color: white;
             cursor: pointer;
             transition: transform 0.2s;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
         }
 
         .reset-button:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             background: linear-gradient(145deg, #ff5555, #cc4444);
         }
 
@@ -43,6 +46,25 @@
             color: #b8860b;
             margin-bottom: 2rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 2.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .game-icon {
+            font-size: 3.2rem;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-5px);
+            }
         }
 
         .buttons {
@@ -52,19 +74,50 @@
         }
 
         button {
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
             border: none;
-            border-radius: 8px;
-            background: linear-gradient(145deg, #ffd700, #daa520);
-            color: white;
+            font-size: 2.5rem;
+            margin: 0 1rem;
             cursor: pointer;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(145deg, #ffd700, #daa520);
+            box-shadow: 
+                0 10px 20px rgba(0, 0, 0, 0.2),
+                inset 0 -5px 15px rgba(0, 0, 0, 0.3),
+                inset 0 5px 15px rgba(255, 255, 255, 0.5);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        button span.icon {
+            font-size: 3.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+        button span.text {
+            font-size: 1.2rem;
         }
 
         button:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 25px rgba(0, 0, 0, 0.3),
+                inset 0 -5px 15px rgba(0, 0, 0, 0.3),
+                inset 0 5px 15px rgba(255, 255, 255, 0.5);
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.2),
+                inset 0 -3px 10px rgba(0, 0, 0, 0.3),
+                inset 0 3px 10px rgba(255, 255, 255, 0.5);
         }
 
         .modal {
@@ -144,32 +197,77 @@
         }
 
         #score {
-            margin-top: 1rem;
-            font-size: 1.2rem;
-            color: #b8860b;
+            margin-top: 1.5rem;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .score-player, .score-computer {
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .score-player {
+            color: #2e8b57;
+            background: rgba(46, 139, 87, 0.1);
+            border: 2px solid #2e8b57;
+        }
+
+        .score-computer {
+            color: #cd5c5c;
+            background: rgba(205, 92, 92, 0.1);
+            border: 2px solid #cd5c5c;
+        }
+
+        #playerScore, #computerScore {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0 0.5rem;
         }
     </style>
 </head>
 <body>
     <div class="game-container">
-        <h1>เกมเป่ายิ้งฉุบ</h1>
+        <h1>
+            <span class="game-icon"><i class="fas fa-gamepad"></i></span>
+            เกมเป่ายิ้งฉุบ
+            <span class="game-icon"><i class="fas fa-dice"></i></span>
+        </h1>
         <div class="buttons">
-            <button onclick="play('กรรไกร')">✌️ กรรไกร</button>
-            <button onclick="play('ค้อน')">✊ ค้อน</button>
-            <button onclick="play('กระดาษ')">✋ กระดาษ</button>
+            <button onclick="play('กรรไกร')">
+                <span class="icon"><i class="fas fa-hand-scissors"></i></span>
+                <span class="text">กรรไกร</span>
+            </button>
+            <button onclick="play('ค้อน')">
+                <span class="icon"><i class="fas fa-hand-rock"></i></span>
+                <span class="text">ค้อน</span>
+            </button>
+            <button onclick="play('กระดาษ')">
+                <span class="icon"><i class="fas fa-hand"></i></span>
+                <span class="text">กระดาษ</span>
+            </button>
         </div>
         <div id="score">
-            คะแนนของคุณ: <span id="playerScore">0</span>
-            คะแนนคอมพิวเตอร์: <span id="computerScore">0</span>
+            <div class="score-player">
+                คะแนนของคุณ: <span id="playerScore">0</span>
+            </div>
+            <div class="score-computer">
+                คะแนนคอมพิวเตอร์: <span id="computerScore">0</span>
+            </div>
         </div>
-        <button class="reset-button" onclick="resetGame()">🔄 เริ่มเกมใหม่</button>
+        <button class="reset-button" onclick="resetGame()">
+            <span class="icon">🔄</span>
+        </button>
     </div>
 
     <div id="resultModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2 id="result"></h2>
-            <p id="choices"></p>
+            <div id="choices"></div>
             <p id="timer"></p>
             <button class="close-button" onclick="closeModal()">ปิด</button>
         </div>
@@ -185,37 +283,44 @@
             const computerChoice = choices[Math.floor(Math.random() * 3)];
             
             let result = '';
+            let resultClass = '';
             
             if (playerChoice === computerChoice) {
-                result = 'เสมอ!';
+                result = 'เสมอ! 🤝';
+                resultClass = 'draw';
             } else if (
                 (playerChoice === 'กรรไกร' && computerChoice === 'กระดาษ') ||
                 (playerChoice === 'ค้อน' && computerChoice === 'กรรไกร') ||
                 (playerChoice === 'กระดาษ' && computerChoice === 'ค้อน')
             ) {
                 result = 'คุณชนะ! 🎉';
+                resultClass = 'win';
                 playerScore++;
             } else {
                 result = 'คอมพิวเตอร์ชนะ! 😢';
+                resultClass = 'lose';
                 computerScore++;
             }
 
             document.getElementById('playerScore').textContent = playerScore;
             document.getElementById('computerScore').textContent = computerScore;
             
-            showResult(result, `คุณเลือก: ${playerChoice} | คอมพิวเตอร์เลือก: ${computerChoice}`);
+            showResult(result, resultClass, playerChoice, computerChoice);
         }
 
-        function showResult(result, choices) {
+        function showResult(result, resultClass, playerChoice, computerChoice) {
             const modal = document.getElementById('resultModal');
+            document.getElementById('result').className = resultClass;
             document.getElementById('result').textContent = result;
-            document.getElementById('choices').textContent = choices;
+            document.getElementById('choices').innerHTML = 
+                `<div class="player-choice">คุณเลือก: ${playerChoice}</div>
+                 <div class="computer-choice">คอมพิวเตอร์เลือก: ${computerChoice}</div>`;
             modal.style.display = 'block';
             startTimer();
         }
 
         function startTimer() {
-            let timeLeft = 5;
+            let timeLeft = 3;
             const timerElement = document.getElementById('timer');
             
             clearInterval(timerInterval);
