@@ -22,21 +22,28 @@
             text-align: center;
         }
 
-        .reset-button {
-            margin-top: 1rem;
-            background: linear-gradient(145deg, #ff6b6b, #cc5555);
-            padding: 0.5rem 1rem;
+   .reset-button {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
             border: none;
-            border-radius: 8px;
+            background: linear-gradient(145deg, #ff6b6b, #cc5555);
             color: white;
             cursor: pointer;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            padding: 0;
+        }
+
+        .reset-button i {
+            font-size: 0.75rem;
         }
 
         .reset-button:hover {
-            transform: translateY(-2px);
+            transform: rotate(180deg);
             background: linear-gradient(145deg, #ff5555, #cc4444);
         }
 
@@ -141,21 +148,20 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
 
-        .close-button {
-            margin-top: 1rem;
-            padding: 0.8rem 2rem;
-            font-size: 1.1rem;
+ .close-button {
+            padding: 0.2rem 0.4rem;
+            font-size: 0.75rem;
+            min-width: 30px;
             border: none;
-            border-radius: 8px;
-            background: linear-gradient(145deg, #666666, #444444);
+            border-radius: 4px;
+            background: #666666;
             color: white;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s;
         }
 
         .close-button:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(145deg, #555555, #333333);
+            background: #555555;
         }
 
         .modal-content h2 {
