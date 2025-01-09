@@ -22,25 +22,24 @@
             text-align: center;
         }
 
- .reset-button {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: none;
+     .reset-button {
+            margin-top: 1rem;
             background: linear-gradient(145deg, #ff6b6b, #cc5555);
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
             color: white;
             cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 1rem;
-            padding: 0;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
         }
 
-        .reset-button i {
-            font-size: 0.75rem;
+/*         .reset-button:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(145deg, #ff5555, #cc4444);
         }
+ */
 
         .reset-button:hover {
             transform: rotate(180deg);
@@ -148,16 +147,13 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
 
- .close-button {
-            padding: 0.2rem 0.4rem;
-            font-size: 0.75rem;
-            min-width: 30px;
-            border: none;
-            border-radius: 4px;
-            background: #666666;
-            color: white;
+       .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.2s;
+            color: #666;
         }
 
         .close-button:hover {
